@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>For Diya 🌸</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #D4537E;
+    --rose-light: #FBEAF0;
+    --rose-mid: #ED93B1;
+    --rose-dark: #72243E;
+    --gold: #BA7517;
+    --gold-light: #FAEEDA;
+    --teal: #1D9E75;
+    --teal-light: #E1F5EE;
+    --text: #2C2C2A;
+    --muted: #888780;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #fff8f9;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* FLOATING PETALS */
+  .petals-bg {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    width: 12px; height: 16px;
+    background: var(--rose-mid);
+    border-radius: 50% 0 50% 0;
+    opacity: 0;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 0.7; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* HERO */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(160deg, #fff0f5 0%, #fff8f0 50%, #f0fff8 100%);
+  }
+
+  .hero-icon {
+    font-size: 72px;
+    margin-bottom: 1.5rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    color: var(--rose-dark);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 span { font-style: italic; color: var(--rose); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    margin-bottom: 2.5rem;
+  }
+
+  .scroll-hint {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    animation: bounce 2s ease-in-out infinite;
+    cursor: default;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative; z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rose);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    color: var(--rose-dark);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .prose {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #444;
+    font-weight: 300;
+  }
+  .prose + .prose { margin-top: 1rem; }
+  .prose strong { font-weight: 500; color: var(--rose-dark); }
+
+  /* DIVIDER */
+  .divider {
+    text-align: center;
+    color: var(--rose-mid);
+    font-size: 1.5rem;
+    letter-spacing: 0.5rem;
+    opacity: 0.5;
+    padding: 1rem 0;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1.5px;
+    background: linear-gradient(to bottom, transparent, var(--rose-mid), transparent);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.6s ease;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.4rem; top: 0.35rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--rose);
+    border: 2px solid #fff8f9;
+  }
+  .timeline-year {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rose);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+  .timeline-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #555;
+    font-weight: 300;
+  }
+
+  /* CARD */
+  .card {
+    background: #fff;
+    border: 1px solid #f0d5df;
+    border-radius: 20px;
+    padding: 2rem 2.5rem;
+    text-align: center;
+    box-shadow: 0 4px 30px rgba(212, 83, 126, 0.08);
+  }
+
+  /* BIG QUESTION */
+  .question-section {
+    text-align: center;
+    padding: 6rem 2rem;
+    background: linear-gradient(160deg, #fff0f5 0%, #f0fff8 100%);
+  }
+
+  .question-heart {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    animation: heartbeat 1.4s ease-in-out infinite;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.2); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.15); }
+    56% { transform: scale(1); }
+  }
+
+  .question-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: var(--rose-dark);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .question-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 3rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* BUTTONS */
+  .btn-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .btn {
+    padding: 0.9rem 2.5rem;
+    border-radius: 60px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.02em;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: scale(0.97); }
+
+  .btn-yes {
+    background: var(--rose);
+    color: #fff;
+    box-shadow: 0 6px 24px rgba(212,83,126,0.3);
+  }
+  .btn-yes:hover { box-shadow: 0 8px 28px rgba(212,83,126,0.45); }
+
+  .btn-no {
+    background: transparent;
+    color: var(--muted);
+    border: 1.5px solid #ddd;
+  }
+  .btn-no:hover { border-color: var(--rose-mid); color: var(--rose-dark); }
+
+  /* RESPONSE SCREENS */
+  .response-screen {
+    display: none;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    animation: fadeIn 0.6s ease;
+  }
+  .response-screen.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .response-icon { font-size: 5rem; margin-bottom: 1.5rem; display: block; }
+
+  .response-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--rose-dark);
+    margin-bottom: 1rem;
+  }
+
+  .response-text {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  /* CONFETTI */
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 10px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    animation: confettiFall 2.5s ease forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* NO BUTTON CHASE */
+  .no-wrapper { position: relative; display: inline-block; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    position: relative; z-index: 1;
+  }
+
+  .highlight-box {
+    background: var(--rose-light);
+    border-left: 3px solid var(--rose);
+    border-radius: 0 12px 12px 0;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .highlight-box p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--rose-dark);
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+
+<!-- Falling petals -->
+<div class="petals-bg" id="petals"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-icon">🌸</div>
+  <h1>Hey <span>Diya</span>,<br>there's something<br>I need to say.</h1>
+  <p class="hero-sub">From the boy next door who never stopped noticing you.</p>
+  <div class="scroll-hint">↓ &nbsp; scroll &nbsp; ↓</div>
+</div>
+
+<!-- STORY -->
+<section>
+  <p class="section-label">Our story</p>
+  <h2 class="section-title">It started with a glance — and never really stopped.</h2>
+
+  <div class="timeline" id="timeline">
+    <div class="timeline-item">
+      <div class="timeline-year">2017 · Class 7th</div>
+      <div class="timeline-text">A new city, a new chapter. And somewhere in this city called Dehradun, a girl named Diya existed — I just didn't know it yet.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Class 9th · First crush</div>
+      <div class="timeline-text">I saw you. The neighbour I'd somehow never spoken to. And quietly, without any warning, my heart picked a favourite.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Class 11th · First words</div>
+      <div class="timeline-text">Different schools, different worlds — but one afternoon on the way back home, I finally said hello. I was nervous. You were you. It was enough.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Class 12th · First proposal</div>
+      <div class="timeline-text">I told you how I felt. You said no. I understood — but I won't pretend it didn't hurt a little. What mattered more was that we stayed friends.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">After 12th · Life happened</div>
+      <div class="timeline-text">I had other chapters. You had yours. Relationships came and went. But through all of it — your friendship stayed. Quiet, consistent, real.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">Yesterday · Full circle</div>
+      <div class="timeline-text">Four years later. I looked at you — and I thought: I want to try. Not because I have to. Because I genuinely want to.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">· · ·</div>
+
+<!-- LETTER -->
+<section>
+  <p class="section-label">What I want you to know</p>
+  <h2 class="section-title">No drama. Just honesty.</h2>
+
+  <p class="prose">I'm not going to pretend I've been secretly in love with you for years. You know me better than that — and that's exactly the point.</p>
+
+  <div class="highlight-box">
+    <p>"You know my past. I know yours. We've seen each other at our worst and still chose to stay in each other's lives. That's rare, Diya. That's worth something."</p>
+  </div>
+
+  <p class="prose">I don't have a grand speech. I just know that when I think about who I genuinely enjoy being around — who I can be completely free with — you show up first. And I think that deserves a chance.</p>
+
+  <p class="prose">I want to <strong>try</strong>. I want to see if what we already have could become something more. Not pressure, not urgency — just an open door I'm inviting you to walk through with me.</p>
+
+  <div class="highlight-box">
+    <p>"Whatever you decide — yes or no — nothing changes between us. You are my friend first. Always."</p>
+  </div>
+</section>
+
+<div class="divider">· · ·</div>
+
+<!-- WHY YOU -->
+<section>
+  <p class="section-label">A few reasons</p>
+  <h2 class="section-title">Why you, why now.</h2>
+  <div class="card">
+    <p class="prose" style="text-align:left;">
+      ✦ &nbsp;Because you've known me since before I figured myself out — and you didn't leave.<br><br>
+      ✦ &nbsp;Because being around you doesn't feel like effort. It feels like breathing.<br><br>
+      ✦ &nbsp;Because you were my first crush for a reason — and I never fully understood why until now.<br><br>
+      ✦ &nbsp;Because I'd rather try and know, than always wonder <em>what if.</em><br><br>
+      ✦ &nbsp;Because you deserve someone who sees you clearly — and I think I do.
+    </p>
+  </div>
+</section>
+
+<!-- BIG QUESTION -->
+<div class="question-section" id="question-section">
+  <span class="question-heart">💗</span>
+  <h2 class="question-title">So, Diya...</h2>
+  <p class="question-sub">Would you like to give us a chance?</p>
+
+  <div id="main-buttons">
+    <div class="btn-row">
+      <button class="btn btn-yes" onclick="handleYes()">Yes, let's try 🌸</button>
+      <div class="no-wrapper" id="no-wrapper">
+        <button class="btn btn-no" id="no-btn" onclick="handleNo()">I need more time</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- YES RESPONSE -->
+  <div class="response-screen" id="yes-screen">
+    <span class="response-icon">🎉</span>
+    <h3 class="response-title">You said yes!!</h3>
+    <p class="response-text">Honestly? I'm smiling so hard right now. Let's take it one day at a time — no rush, no pressure. Just us, figuring this out together. 🌸</p>
+  </div>
+
+  <!-- NO / LATER RESPONSE -->
+  <div class="response-screen" id="no-screen">
+    <span class="response-icon">🤍</span>
+    <h3 class="response-title" style="color:#888;">Completely okay.</h3>
+    <p class="response-text">Take all the time you need. I meant what I said — your friendship means more to me than any answer. I'll be here, same as always. 💙</p>
+  </div>
+</div>
+
+<footer>
+  Made with a lot of feelings and zero regrets &nbsp;·&nbsp; 
+</footer>
+
+<script>
+  // Falling petals
+  const petalColors = ['#ED93B1','#F4C0D1','#D4537E','#F5C4B3','#FAC775'];
+  const container = document.getElementById('petals');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = (Math.random() * -100) + 'px';
+    p.style.animationDuration = (6 + Math.random() * 10) + 's';
+    p.style.animationDelay = (Math.random() * 12) + 's';
+    p.style.background = petalColors[Math.floor(Math.random() * petalColors.length)];
+    p.style.opacity = 0.4 + Math.random() * 0.4;
+    p.style.transform = `rotate(${Math.random()*360}deg)`;
+    container.appendChild(p);
+  }
+
+  // Timeline reveal on scroll
+  const items = document.querySelectorAll('.timeline-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.2 });
+  items.forEach(item => observer.observe(item));
+
+  // Confetti
+  function launchConfetti() {
+    const colors = ['#D4537E','#F4C0D1','#1D9E75','#FAC775','#5DCAA5','#F0997B'];
+    for (let i = 0; i < 80; i++) {
+      setTimeout(() => {
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.top = '-10px';
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        c.style.width = (6 + Math.random() * 8) + 'px';
+        c.style.height = (6 + Math.random() * 8) + 'px';
+        c.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 3000);
+      }, i * 30);
+    }
+  }
+
+  function handleYes() {
+    document.getElementById('main-buttons').style.display = 'none';
+    document.getElementById('yes-screen').classList.add('active');
+    launchConfetti();
+    setTimeout(launchConfetti, 1200);
+  }
+
+  let noCount = 0;
+  function handleNo() {
+    noCount++;
+    if (noCount < 3) {
+      const btn = document.getElementById('no-btn');
+      const messages = ['Are you sure? 🥺', 'Really really sure? 💭'];
+      btn.textContent = messages[noCount - 1];
+      // Move the button playfully
+      const wrapper = document.getElementById('no-wrapper');
+      wrapper.style.transform = `translate(${(Math.random()-0.5)*60}px, ${(Math.random()-0.5)*30}px)`;
+    } else {
+      document.getElementById('main-buttons').style.display = 'none';
+      document.getElementById('no-screen').classList.add('active');
+    }
+  }
+</script>
+</body>
+</html>
